@@ -1,0 +1,8 @@
+WITH temp_table AS(SELECT id,recordDate,temperature,
+DATE_ADD(recordDate,INTERVAL -1 DAY) AS "original_date",
+LAG(recordDate) OVER(ORDER BY recordDate) AS "prev_date",
+LAG(temperature) OVER(ORDER BY recordDate) AS "prev_temp"
+FROM Weather)
+
+SELECT id FROM temp_table WHERE prev_date=original_date AND temperature>prev_temp;
+

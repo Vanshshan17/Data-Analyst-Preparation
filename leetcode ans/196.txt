@@ -1,0 +1,7 @@
+WITH temp_table AS(
+    SELECT id,email,
+    ROW_NUMBER() OVER(PARTITION BY email ORDER BY id) AS "r_n"
+    FROM Person
+)
+
+DELETE FROM person where id IN(SELECT id FROM temp_table WHERE r_n!=1);
