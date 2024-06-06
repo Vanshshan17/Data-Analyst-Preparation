@@ -1,0 +1,5 @@
+WITH temp_table AS(
+SELECT count(student) AS no_of_students,class FROM Courses GROUP BY class)
+
+SELECT class FROM temp_table WHERE no_of_students>=5;
+

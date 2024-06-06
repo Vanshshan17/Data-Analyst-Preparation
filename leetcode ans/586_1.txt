@@ -1,0 +1,7 @@
+WITH temp_table AS(
+SELECT count(order_number) AS ordernum,customer_number FROM Orders GROUP BY customer_number)
+
+SELECT customer_number FROM temp_table WHERE ordernum=(SELECT MAX(ordernum) FROM temp_table);
+
+
+
