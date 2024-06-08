@@ -1,0 +1,7 @@
+WITH temp_table AS(
+SELECT p.project_id,e.experience_years
+FROM Project as p
+LEFT JOIN Employee as e
+ON p.employee_id=e.employee_id)
+
+SELECT project_id,ROUND(AVG(experience_years),2) AS average_years FROM temp_table GROUP BY project_id;
