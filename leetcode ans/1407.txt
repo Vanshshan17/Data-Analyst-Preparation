@@ -1,0 +1,11 @@
+WITH temp_tt AS(
+SELECT user_id,sum(distance) AS d FROM Rides GROUP BY user_id)
+
+SELECT u.name AS name,CASE
+WHEN t.d IS NULL THEN 0
+ELSE t.d
+END AS travelled_distance
+FROM Users AS u
+LEFT JOIN temp_tt AS t
+ON u.id=t.user_id
+ORDER BY travelled_distance DESC,u.name ASC;

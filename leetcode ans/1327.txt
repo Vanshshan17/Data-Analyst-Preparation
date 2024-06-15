@@ -1,0 +1,7 @@
+WITH temp_tt AS(
+SELECT product_id,sum(unit) AS u FROM Orders WHERE YEAR(order_date)=2020 AND MONTH(order_date)=2 GROUP BY product_id HAVING SUM(unit)>=100)
+
+SELECT p.product_name,t.u AS Unit
+FROM Products AS p
+INNER JOIN temp_tt AS t
+ON p.product_id=t.product_id;

@@ -1,0 +1,14 @@
+WITH temp_tt AS(SELECT * 
+FROM Students
+CROSS JOIN Subjects
+)
+
+SELECT t.student_id,t.student_name,t.subject_name,sum(CASE
+WHEN e.subject_name IS NULL THEN 0
+ELSE 1
+END) AS attended_exams
+FROM temp_tt AS t
+LEFT JOIN Examinations as e
+ON t.student_id=e.student_id AND t.subject_name=e.subject_name
+GROUP BY t.student_id,t.student_name,t.subject_name
+ORDER BY student_id;
