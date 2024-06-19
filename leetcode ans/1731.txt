@@ -1,0 +1,8 @@
+WITH temp_tt AS(SELECT reports_to,COUNT(employee_id) AS reports_count,ROUND(AVG(age),0) AS average_age
+FROM Employees WHERE reports_to IS NOT NULL GROUP BY reports_to)
+
+SELECT t.reports_to AS employee_id,e.name,t.reports_count,t.average_age
+FROM temp_tt AS t
+LEFT JOIN Employees AS e
+ON t.reports_to=e.employee_id
+ORDER BY employee_id ASC;
