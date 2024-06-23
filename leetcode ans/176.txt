@@ -1,0 +1,6 @@
+WITH temp_tt AS(
+SELECT id,salary,
+DENSE_RANK() OVER(ORDER BY salary DESC) AS r
+FROM Employee)
+
+SELECT IFNULL((SELECT salary FROM temp_tt WHERE r=2 LIMIT 1),NULL) AS SecondHighestSalary;

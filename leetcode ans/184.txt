@@ -1,0 +1,8 @@
+WITH temp_tt AS(
+SELECT e.name AS Employee,e.salary AS Salary,d.name AS Department,
+MAX(e.salary) OVER(PARTITION BY d.name) AS "Max_Salary"
+FROM Employee AS e
+LEFT JOIN Department AS d
+ON e.departmentId=d.id)
+
+SELECT Department,Employee,Salary FROM temp_tt WHERE Salary=Max_Salary;

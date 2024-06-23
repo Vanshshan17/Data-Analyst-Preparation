@@ -1,0 +1,11 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+RETURN (
+WITH temp_tt AS(
+SELECT id,salary,
+DENSE_RANK() OVER(ORDER BY salary DESC) AS r
+FROM Employee)
+
+SELECT IFNULL((SELECT salary FROM temp_tt WHERE r=N LIMIT 1),null)
+  );
+END
