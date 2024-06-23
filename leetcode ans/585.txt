@@ -1,0 +1,10 @@
+WITH temp_tt1 AS(SELECT CONCAT(lat,',',lon) AS location FROM Insurance GROUP BY lat,lon HAVING COUNT(pid)>1),
+
+temp_tt2 AS (SELECT DISTINCT i1.*
+FROM Insurance as i1
+JOIN Insurance as i2
+ON i1.tiv_2015=i2.tiv_2015
+WHERE i1.pid!=i2.pid
+AND CONCAT(i1.lat,',',i2.lat) NOT IN(SELECT location FROM temp_tt1))
+
+SELECT ROUND(SUM(tiv_2016),2) AS tiv_2016 FROM temp_tt2;
