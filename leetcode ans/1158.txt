@@ -1,0 +1,10 @@
+WITH temp_tt AS(SELECT u.user_id,SUM(CASE WHEN YEAR(o.order_date)=2019 THEN 1 ELSE 0 END) AS orders_in_2019
+FROM Users AS u
+LEFT JOIN Orders AS o
+ON u.user_id=o.buyer_id
+GROUP BY u.user_id)
+
+SELECT t.user_id AS buyer_id,l.join_date,t.orders_in_2019
+FROM temp_tt AS t
+LEFT JOIN Users AS l
+ON t.user_id=l.user_id;

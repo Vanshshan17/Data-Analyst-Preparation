@@ -1,0 +1,11 @@
+Method-1
+SELECT customer_id FROM Customer GROUP BY customer_id
+HAVING COUNT(DISTINCT product_key)=(SELECT COUNT(DISTINCT product_key) FROM Product);
+
+
+Method-2
+WITH temp_tt AS(
+SELECT customer_id,COUNT(DISTINCT product_key) AS c FROM Customer GROUP BY customer_id
+)
+
+SELECT customer_id FROM temp_tt WHERE c=(SELECT COUNT(product_key) FROM Product);
