@@ -1,0 +1,10 @@
+WITH temp_tt AS(SELECT mr.*,m.title AS title,u.name AS name
+FROM MovieRating as mr
+LEFT JOIN Movies as m
+ON mr.movie_id=m.movie_id
+LEFT JOIN Users AS u
+ON mr.user_id=u.user_id)
+
+(SELECT name AS results FROM temp_tt GROUP BY name ORDER BY COUNT(*) DESC,name ASC LIMIT 1)
+UNION
+(SELECT title AS results  FROM temp_tt WHERE DATE_FORMAT(created_at,'%Y-%m')='2020-02' GROUP BY title ORDER BY AVG(rating) DESC,title ASC LIMIT 1);

@@ -1,0 +1,11 @@
+WITH temp_tt AS(
+SELECT visited_on,SUM(amount) AS total FROM Customer GROUP BY visited_on),
+
+temp_tt2 AS(
+SELECT visited_on,
+SUM(total) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS "amount",
+ROUND(AVG(total) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),2) AS "average_amount"
+FROM temp_tt)
+
+SELECT * FROM temp_tt2 WHERE visited_on>=(SELECT visited_on FROM temp_tt2 LIMIT 1)+6
+ORDER BY visited_on;

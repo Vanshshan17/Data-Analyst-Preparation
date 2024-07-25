@@ -1,0 +1,5 @@
+WITH temp_tt AS(
+SELECT *,SUM(weight) OVER(ORDER BY turn ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "total"
+FROM Queue)
+
+SELECT person_name FROM temp_tt WHERE total<=1000 ORDER BY total DESC LIMIT 1;
